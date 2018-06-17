@@ -1,6 +1,8 @@
 body {
 
 	background-color: #232323;
+	margin: 0;
+	font-family: "Montserrat", "Avenir";
 }
 
 .square {
@@ -17,5 +19,24 @@ body {
 }
 
 h1 {
+	font-weight: normal;
 	color: white;
+	text-align: center;
+	background-color: steelblue;
+	margin: 0;
+	text-transform: uppercase;
+}
+
+span {
+	color: white;
+}
+
+#stripe {
+	background: white;
+	height: 30px;
+	text-align: center;
+}
+
+.selected {
+	background-color: blue;
 }
