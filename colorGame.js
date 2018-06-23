@@ -14,44 +14,84 @@ var messageDispaly = document.querySelector("#message");
 var h1 = document.querySelector("h1");
 //select the button reset
 var resetButton = document.querySelector("#reset");
-var easyBtn = document.querySelector("#easyBtn");
-var hardBtn = document.querySelector("#hardBtn");
+var modeButtons = document.querySelectorAll(".mode"); 
 
-easyBtn.addEventListener("click", function(){
-	hardBtn.classList.remove("selected");
-	this.classList.add("selected");
-	numSquares = 3;
-	color = generateRandomColors(numSquares);
-	pickedColor = pickColor();
-	colorDisplay.textContent = pickedColor;
-	//we want hide the bottom three divs in easy mode
-	//assign new color to the divs 
-	for(var i = 0; i < squares.length; i++) {
-		//because color has 3 items i can use it as a boolean if its true change tha background color
-		//so pressing the the easy botton it changes just the color of the three upper colors 
-		if(color[i]) {
-			squares[i].style.backgroundColor = color[i];
-		} else {
-			//make the bottom three div s disappear
-			squares[i].style.display = "none";
+
+for(var i = 0; i < modeButtons.length; i++) {
+	modeButtons[i].addEventListener("click", function(){
+		modeButtons[0].classList.remove("selected");
+		modeButtons[1].classList.remove("selected");
+		this.classList.add("selected");
+		//la funzione reset() al suo interno utilizza il parametro numsquare
+		//questo if statement cambia il valore della variabile in base a quale tasto viene premuto
+		
+		if(this.textContent == "Easy") {
+			numSquares = 3;
+		}else {
+			numSquares = 6;
 		}
-	}
-})
 
-hardBtn.addEventListener("click", function(){
-	easyBtn.classList.remove("selected");
-	this.classList.add("selected");
-	numSquares = 6;
-	color = generateRandomColors(numSquares);
+		reset();
+		//figure out how many square to show
+		//pick a new color
+		//pick a new pickedcolor
+		//update page to reflect changes
+
+	});
+}
+
+function reset(){
+	//generate random colors dependig on the num square variable
+	color  = generateRandomColors(numSquares);
+	//pick a new random color from the array
 	pickedColor = pickColor();
+	//change colorDisplay to match pickColor
 	colorDisplay.textContent = pickedColor;
-	
+	resetButton.textContent = "New Color";
+	messageDispaly.textContent = "";
+	//looping through all the squares updating their color
 	for(var i = 0; i < squares.length; i++) {
 		squares[i].style.backgroundColor = color[i];
-		squares[i].style.display = "block";
 	}
+	//updating the background color of the h1 to the initial steelblue
+	h1.style.backgroundColor = "steelblue";
+}
 
-})
+// easyBtn.addEventListener("click", function(){
+// 	hardBtn.classList.remove("selected");
+// 	this.classList.add("selected");
+// 	numSquares = 3;
+// 	color = generateRandomColors(numSquares);
+// 	pickedColor = pickColor();
+// 	colorDisplay.textContent = pickedColor;
+// 	//we want hide the bottom three divs in easy mode
+// 	//assign new color to the divs 
+// 	for(var i = 0; i < squares.length; i++) {
+// 		//because color has 3 items i can use it as a boolean if its true change tha background color
+// 		//so pressing the the easy botton it changes just the color of the three upper colors 
+// 		if(color[i]) {
+// 			squares[i].style.backgroundColor = color[i];
+// 		} else {
+// 			//make the bottom three div s disappear
+// 			squares[i].style.display = "none";
+// 		}
+// 	}
+// })
+
+// hardBtn.addEventListener("click", function(){
+// 	easyBtn.classList.remove("selected");
+// 	this.classList.add("selected");
+// 	numSquares = 6;
+// 	color = generateRandomColors(numSquares);
+// 	pickedColor = pickColor();
+// 	colorDisplay.textContent = pickedColor;
+	
+// 	for(var i = 0; i < squares.length; i++) {
+// 		squares[i].style.backgroundColor = color[i];
+// 		squares[i].style.display = "block";
+// 	}
+
+// })
 
 
 //code to reset tha game once you press on play again
@@ -63,6 +103,8 @@ resetButton.addEventListener("click", function(){
 	pickedColor = pickColor();
 	//change colorDisplay to match pickColor
 	colorDisplay.textContent = pickedColor;
+	this.textContent = "New Color";
+	messageDispaly.textContent = "";
 	//change color for the sqare
 	for(var i = 0; i < squares.length; i++) {
 		squares[i].style.backgroundColor = color[i];
