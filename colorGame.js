@@ -27,16 +27,11 @@ for(var i = 0; i < modeButtons.length; i++) {
 		
 		if(this.textContent == "Easy") {
 			numSquares = 3;
-		}else {
+		} else {
 			numSquares = 6;
 		}
 
 		reset();
-		//figure out how many square to show
-		//pick a new color
-		//pick a new pickedcolor
-		//update page to reflect changes
-
 	});
 }
 
@@ -51,67 +46,27 @@ function reset(){
 	messageDispaly.textContent = "";
 	//looping through all the squares updating their color
 	for(var i = 0; i < squares.length; i++) {
-		squares[i].style.backgroundColor = color[i];
+		//if the color that we want to give to the square exist
+		if(color[i]) {
+			squares[i].style.display = "block";
+			//change the color of the square
+			squares[i].style.backgroundColor = color[i];
+		//if the color of the square does not exist
+		} else {
+			squares[i].style.display = "none";
+
+		}
+		
 	}
 	//updating the background color of the h1 to the initial steelblue
 	h1.style.backgroundColor = "steelblue";
 }
 
-// easyBtn.addEventListener("click", function(){
-// 	hardBtn.classList.remove("selected");
-// 	this.classList.add("selected");
-// 	numSquares = 3;
-// 	color = generateRandomColors(numSquares);
-// 	pickedColor = pickColor();
-// 	colorDisplay.textContent = pickedColor;
-// 	//we want hide the bottom three divs in easy mode
-// 	//assign new color to the divs 
-// 	for(var i = 0; i < squares.length; i++) {
-// 		//because color has 3 items i can use it as a boolean if its true change tha background color
-// 		//so pressing the the easy botton it changes just the color of the three upper colors 
-// 		if(color[i]) {
-// 			squares[i].style.backgroundColor = color[i];
-// 		} else {
-// 			//make the bottom three div s disappear
-// 			squares[i].style.display = "none";
-// 		}
-// 	}
-// })
-
-// hardBtn.addEventListener("click", function(){
-// 	easyBtn.classList.remove("selected");
-// 	this.classList.add("selected");
-// 	numSquares = 6;
-// 	color = generateRandomColors(numSquares);
-// 	pickedColor = pickColor();
-// 	colorDisplay.textContent = pickedColor;
-	
-// 	for(var i = 0; i < squares.length; i++) {
-// 		squares[i].style.backgroundColor = color[i];
-// 		squares[i].style.display = "block";
-// 	}
-
-// })
-
 
 //code to reset tha game once you press on play again
 
 resetButton.addEventListener("click", function(){
-	//generate all new colors
-	color  = generateRandomColors(numSquares);
-	//pick a new random color from the array
-	pickedColor = pickColor();
-	//change colorDisplay to match pickColor
-	colorDisplay.textContent = pickedColor;
-	this.textContent = "New Color";
-	messageDispaly.textContent = "";
-	//change color for the sqare
-	for(var i = 0; i < squares.length; i++) {
-		squares[i].style.backgroundColor = color[i];
-	}
-	h1.style.backgroundColor = "steelblue";
-	       
-
+	reset();	
 })
 //parte variabile di testo e uguale al colore selezionato 
 colorDisplay.textContent = pickedColor;
