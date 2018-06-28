@@ -1,11 +1,11 @@
 var numSquares = 6;
 //per prima cosa creiamo una lista di colori casuali tramite una funzione
 //l`argomento della funione e il numero di colori casuali che vogliamo generare
-var color = generateRandomColors(numSquares);
+var color = [];
 //seleziono tutti gli square
 var squares = document.querySelectorAll(".square");
 //colore che si decide e la risposta giusta scelto in maniera casuale
-var pickedColor = pickColor();
+var pickedColor;
 //seleziono lo span che contiene la parte variabile di testo
 var colorDisplay = document.getElementById("colorDisplay");
 //span inside the header div that change base on the anwer
@@ -17,23 +17,63 @@ var resetButton = document.querySelector("#reset");
 var modeButtons = document.querySelectorAll(".mode"); 
 
 
-for(var i = 0; i < modeButtons.length; i++) {
-	modeButtons[i].addEventListener("click", function(){
-		modeButtons[0].classList.remove("selected");
-		modeButtons[1].classList.remove("selected");
-		this.classList.add("selected");
-		//la funzione reset() al suo interno utilizza il parametro numsquare
-		//questo if statement cambia il valore della variabile in base a quale tasto viene premuto
-		
-		if(this.textContent == "Easy") {
-			numSquares = 3;
-		} else {
-			numSquares = 6;
+init();
+
+function init() {
+
+	setUpModeButtons();
+	setUpSquares();
+	reset();
+}
+
+function setUpModeButtons() {
+	//mode buttons event listeners
+	for(var i = 0; i < modeButtons.length; i++) {
+		modeButtons[i].addEventListener("click", function(){
+			modeButtons[0].classList.remove("selected");
+			modeButtons[1].classList.remove("selected");
+			this.classList.add("selected");
+			//la funzione reset() al suo interno utilizza il parametro numsquare
+			//questo if statement cambia il valore della variabile in base a quale tasto viene premuto
+			
+			if(this.textContent == "Easy") {
+				numSquares = 3;
+			} else {
+				numSquares = 6;
+			}
+
+			reset();
+		});
+		}
+	}
+
+function setUpSquares() {
+	//faccio un loop che assegni a ciascun  quadrato un colore diverso dall array
+		for(var i = 0; i < squares.length; i++) {
+			//add event listener to squares
+			squares[i].addEventListener("click", function(){
+				//grab color from picked square
+				var clickedColor = this.style.backgroundColor;
+				//compare color to picked color
+				if(clickedColor === pickedColor) {
+					messageDispaly.textContent = "Correct!";
+					resetButton.textContent = "Play Again?"
+					colorChange(pickedColor);
+					h1.style.backgroundColor = clickedColor;
+					
+				} else {
+					//elimino i quadrati sbagliati se clicckati
+					this.style.backgroundColor = " #232323";
+					messageDispaly.textContent = "try again!";
+					
+				}
+		});
 		}
 
-		reset();
-	});
-}
+	}
+
+
+
 
 function reset(){
 	//generate random colors dependig on the num square variable
@@ -71,30 +111,7 @@ resetButton.addEventListener("click", function(){
 //parte variabile di testo e uguale al colore selezionato 
 colorDisplay.textContent = pickedColor;
 
-//faccio un loop che assegni a ciascun  quadrato un colore diverso dall array
-for(var i = 0; i < squares.length; i++) {
-	//add initial color to squares
-	squares[i].style.backgroundColor = color[i];
 
-	//add event listener to squares
-	squares[i].addEventListener("click", function(){
-		//grab color from picked square
-		var clickedColor = this.style.backgroundColor;
-		//compare color to picked color
-		if(clickedColor === pickedColor) {
-			messageDispaly.textContent = "Correct!";
-			resetButton.textContent = "Play Again?"
-			colorChange(pickedColor);
-			h1.style.backgroundColor = clickedColor;
-			
-		} else {
-			//elimino i quadrati sbagliati se clicckati
-			this.style.backgroundColor = " #232323";
-			messageDispaly.textContent = "try again!";
-			
-		}
-	});
-}
 
 
 function colorChange(color) {
